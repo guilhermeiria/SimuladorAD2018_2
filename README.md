@@ -1,4 +1,4 @@
-# Simulador filas M/G/1
+# Simulador filas M/M/1
 
 
 
@@ -39,7 +39,7 @@ sudo apt-get install python-matplotlib
 Faça o download do projeto no link:
 
 ```
-https://github.com/vitor251093/SimuladorAD.2017-2.git
+https://github.com/guilhermeiria/SimuladorAD2018_2.git
 ```
 
 Entre na pasta do projeto e execute:
