@@ -39,7 +39,8 @@ class Simulacao(object):
         self.__tempoAtual = 0.0
         self.__indice_cliente_atual = 0
         self.__indice_primeiro_cliente_nao_transiente = 0
-        self.__faseTransienteFinalizada = False
+        # teste trocar para False
+        self.__faseTransienteFinalizada = True
 
         ### Codigo dos principais eventos da simulacao:
         # 0: Evento chegada de Cliente na Fila 1
@@ -61,8 +62,8 @@ class Simulacao(object):
         self.__quantidadeDeEventosPorVariancia = 1000
         self.__diferencaAceitavelDasVariancias = 0.0000002
         '''
-        self.__quantidadeDeEventosPorVariancia = 100
-        self.__diferencaAceitavelDasVariancias = 0.002
+        self.__quantidadeDeEventosPorVariancia = 10
+        self.__diferencaAceitavelDasVariancias = 0.02
         self.__eventosDaVariancia1 = []
         self.__duracaoEventosDaVariancia1 = []
         self.__eventosDaVariancia2 = []
