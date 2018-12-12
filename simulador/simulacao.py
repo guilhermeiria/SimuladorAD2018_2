@@ -576,9 +576,9 @@ def safeFloat(key, stringValue):
 def main(argv):
     lambdaValue = 0.3
     miValue = 1.0
-    # numero de clientes baixo somente para testes
-    numeroDeClientesPorRodada = 20
-    rodadas = 5
+    # numero de clientes baixo somente para testes. Original 20000 com 100 rodadas
+    numeroDeClientesPorRodada = 20000
+    rodadas = 100
     simulacoes = 1
     outputFile = False
     testeDeCorretude = False
