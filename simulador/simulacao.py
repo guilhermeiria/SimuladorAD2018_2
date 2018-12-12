@@ -39,8 +39,7 @@ class Simulacao(object):
         self.__tempoAtual = 0.0
         self.__indice_cliente_atual = 0
         self.__indice_primeiro_cliente_nao_transiente = 0
-        # teste trocar para False
-        self.__faseTransienteFinalizada = True
+        self.__faseTransienteFinalizada = False
 
         ### Codigo dos principais eventos da simulacao:
         # 0: Evento chegada de Cliente na Fila 1
