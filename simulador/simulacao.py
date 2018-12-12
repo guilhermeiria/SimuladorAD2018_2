@@ -57,8 +57,12 @@ class Simulacao(object):
         #self.__timerFimDeServicoClienteFila2 = -1
 
         ### Atributos usados para determinar o fim da fase transiente
+        ''' Testes
         self.__quantidadeDeEventosPorVariancia = 1000
         self.__diferencaAceitavelDasVariancias = 0.0000002
+        '''
+        self.__quantidadeDeEventosPorVariancia = 100
+        self.__diferencaAceitavelDasVariancias = 0.002
         self.__eventosDaVariancia1 = []
         self.__duracaoEventosDaVariancia1 = []
         self.__eventosDaVariancia2 = []
