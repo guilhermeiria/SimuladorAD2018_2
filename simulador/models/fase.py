@@ -27,10 +27,12 @@ class Fase(object):
     def quantidadeDeClientes(self):
         return len(self.__clientes)
 
+    '''
     def getEsperancaDeN(self, tempoAtual):
         if tempoAtual == self.__tempoInicial:
             return 0
         return (self.__somatorioPessoasFila1PorTempo + self.__somatorioPessoasFila2PorTempo)/(tempoAtual-self.__tempoInicial)
+    '''    
 
     def getEsperancaDeN1(self, tempoAtual):
         if tempoAtual == self.__tempoInicial:

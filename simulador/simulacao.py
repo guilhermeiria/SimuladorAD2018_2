@@ -94,7 +94,7 @@ class Simulacao(object):
     def adicionarEvento (self, cliente, evento, fila, momento):
         print "%f: Cliente %d (%d) %s na fila %d" % (momento, cliente.getID(), cliente.getIndiceDaCor(), evento, fila)
         
-        ENt = self.__fase.getEsperancaDeN(momento)
+        ENt = self.__fase.getEsperancaDeN1(momento)
 
         if self.__output_type == 1:
             self.__view.imprimir("%f,%d" % (ENt, self.__fase.getID()))
