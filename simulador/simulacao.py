@@ -20,6 +20,7 @@ class Simulacao(object):
         self.__numero_de_rodadas = None
         self.__intervaloDeConfianca = None
 
+        # Realmente necessario ?
         self.__seedsDistance = 0.01
         self.__seedsList = []
         self.__view = None
@@ -29,7 +30,8 @@ class Simulacao(object):
         
         self.__clientes = []
         self.__fila1 = Fila(1)
-        self.__fila2 = Fila(2)
+        # rmv
+        #self.__fila2 = Fila(2)
         
         self.__fases = []
         self.__fase = Fase(-1, 0)
@@ -45,12 +47,14 @@ class Simulacao(object):
         # 2: Evento fim de servico 2
         self.__timerChegadaClienteFila1Indice = 0
         self.__timerFimDeServicoClienteFila1Indice = 1
-        self.__timerFimDeServicoClienteFila2Indice = 2
+        # rmv
+        #self.__timerFimDeServicoClienteFila2Indice = 2
 
         ### Todos iniciam com valores invalidos: -1
         self.__timerChegadaClienteFila1 = -1
         self.__timerFimDeServicoClienteFila1 = -1
-        self.__timerFimDeServicoClienteFila2 = -1
+        # rmv
+        #self.__timerFimDeServicoClienteFila2 = -1
 
         ### Atributos usados para determinar o fim da fase transiente
         self.__quantidadeDeEventosPorVariancia = 1000
@@ -65,13 +69,15 @@ class Simulacao(object):
         para o calculo do numero medio de pessoas nas duas filas (E[Ns]). """
     def agregarEmSomatorioPessoasPorTempo (self, tempo):
         self.__fase.inserirNumeroDeClientesPorTempoNaFila1(self.__fila1.numeroDePessoasNaFila(), tempo)
-        self.__fase.inserirNumeroDeClientesPorTempoNaFila2(self.__fila1.numeroDePessoasNaFila(), tempo)
+        #rmv
+        #self.__fase.inserirNumeroDeClientesPorTempoNaFila2(self.__fila1.numeroDePessoasNaFila(), tempo)
 
         if self.__fila1.numeroDePessoasNaFila() > 0:
             self.__fase.inserirNumeroDeClientesPorTempoNaFilaEspera1(self.__fila1.numeroDePessoasNaFila() - 1, tempo)
         else:
             self.__fase.inserirNumeroDeClientesPorTempoNaFilaEspera1(0, tempo)
-
+        # rmv
+        '''
         if self.__fila1.numeroDePessoasNaFila() > 0:
             self.__fase.inserirNumeroDeClientesPorTempoNaFilaEspera2(self.__fila2.numeroDePessoasNaFila(), tempo)
         else:
@@ -79,9 +85,10 @@ class Simulacao(object):
                 self.__fase.inserirNumeroDeClientesPorTempoNaFilaEspera2(self.__fila2.numeroDePessoasNaFila() - 1, tempo)
             else: 
                 self.__fase.inserirNumeroDeClientesPorTempoNaFilaEspera2(0, tempo)
+        '''        
 
     def adicionarEvento (self, cliente, evento, fila, momento):
-        #print "%f: Cliente %d (%d) %s na fila %d" % (momento, cliente.getID(), cliente.getIndiceDaCor(), evento, fila)
+        print "%f: Cliente %d (%d) %s na fila %d" % (momento, cliente.getID(), cliente.getIndiceDaCor(), evento, fila)
         
         ENt = self.__fase.getEsperancaDeN(momento)
 
@@ -90,23 +97,30 @@ class Simulacao(object):
         if self.__output_type == 2:
             self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeN1(momento), self.__fase.getID()))
         if self.__output_type == 3:
-            self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeN2(momento), self.__fase.getID()))
+            # rmv
+            #self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeN2(momento), self.__fase.getID()))
+            self.__view.imprimir("Invalido")
         if self.__output_type == 4:
             self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeNq1(momento), self.__fase.getID()))
         if self.__output_type == 5:
-            self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeNq2(momento), self.__fase.getID()))
+            # rmv
+            #self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeNq2(momento), self.__fase.getID()))
+            self.__view.imprimir("Invalido")
         if self.__output_type == 6:
             self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeT1(), self.__fase.getID()))
         if self.__output_type == 7:
-            self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeT2(), self.__fase.getID()))
+            #self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeT2(), self.__fase.getID()))
+            self.__view.imprimir("Invalido")
         if self.__output_type == 8:
             self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeW1(), self.__fase.getID()))
         if self.__output_type == 9:
-            self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeW2(), self.__fase.getID()))
+            #self.__view.imprimir("%f,%d" % (self.__fase.getEsperancaDeW2(), self.__fase.getID()))
+            self.__view.imprimir("Invalido")
         if self.__output_type == 10:
             self.__view.imprimir("%f,%d" % (self.__fase.getVarianciaDeW1(), self.__fase.getID()))
         if self.__output_type == 11:
-            self.__view.imprimir("%f,%d" % (self.__fase.getVarianciaDeW2(), self.__fase.getID()))
+            #self.__view.imprimir("%f,%d" % (self.__fase.getVarianciaDeW2(), self.__fase.getID()))
+            self.__view.imprimir("Invalido")
 
         if self.__faseTransienteFinalizada == True:
             return
@@ -208,11 +222,14 @@ class Simulacao(object):
 
         self.adicionarEvento(cliente, "chegou", self.__fila1.getID(), self.__tempoAtual)
         if self.__fila1.numeroDePessoasNaFila() == 1:
+            # rmv
+            '''
             if self.__fila2.numeroDePessoasNaFila() > 0: # Interrompe individuo da fila 2
                 clienteInterrompido = self.__fila2.clienteEmAtendimento()
                 clienteInterrompido.setTempoDecorridoServico2(clienteInterrompido.getTempoServico2() - self.__timerFimDeServicoClienteFila2)
                 self.__timerFimDeServicoClienteFila2 = -1
-            
+            '''
+
             cliente.setTempoChegadaServico1(self.__tempoAtual)
             
             self.__timerFimDeServicoClienteFila1 = self.__agendador.agendarTempoDeServicoFila1(self.__mi)
@@ -239,8 +256,11 @@ class Simulacao(object):
         cliente = self.__fila1.retirarClienteEmAtendimento()
         self.adicionarEvento(cliente, "terminou o atendimento", self.__fila1.getID(), self.__tempoAtual)
 
+        # rmv
+        '''
         self.__fila2.adicionarClienteAFila(cliente)
         cliente.setTempoChegadaFila2(self.__tempoAtual)
+        '''
         
         if self.__fila1.numeroDePessoasNaFila() > 0:
             novoCliente = self.__fila1.clienteEmAtendimento()
@@ -250,6 +270,8 @@ class Simulacao(object):
             novoCliente.setTempoServico1(self.__timerFimDeServicoClienteFila1)
         else:
             self.__timerFimDeServicoClienteFila1 = -1
+            # rmv
+            '''
             proximoCliente = self.__fila2.clienteEmAtendimento()
             if proximoCliente.getTempoDecorridoServico2() > 0: 
                 # Cliente da fila 2 que foi interrompido anteriormente retorna
@@ -259,6 +281,7 @@ class Simulacao(object):
                 # Cliente da fila 2 eh atendido pela primeira vez
                 self.__timerFimDeServicoClienteFila2 = self.__agendador.agendarTempoDeServicoFila2(self.__mi)
                 proximoCliente.setTempoServico2(self.__timerFimDeServicoClienteFila2)
+            '''
 
 
     """Evento: Fim de servico na fila 2
@@ -266,6 +289,8 @@ class Simulacao(object):
        fim de um servico na fila 2, que sao: tirar o cliente que concluiu o servico 
        da fila 2, e colocar em servico o proximo cliente da fila 2 (se houver algum)."""
 
+    # rmv
+    '''
     def clienteTerminaServicoNaFila2(self):
         cliente = self.__fila2.retirarClienteEmAtendimento()
         cliente.setTempoTerminoServico2(self.__tempoAtual)
@@ -278,7 +303,7 @@ class Simulacao(object):
             proximoCliente.setTempoServico2(self.__timerFimDeServicoClienteFila2)
         else:
             self.__timerFimDeServicoClienteFila2 = -1
-
+    '''
 
     """ eventoDeDuracaoMinima() ira cuidar da verificacao de qual evento ocorre antes.
         Temos 3 eventos principais: tempo de chegada na fila 1, fim de servico 1 e
@@ -301,15 +326,23 @@ class Simulacao(object):
         timerValido2 = (self.__timerFimDeServicoClienteFila1 != -1)
 
         # Quer dizer que o evento fim do servico 2 esta agendado.
-        timerValido3 = (self.__timerFimDeServicoClienteFila2 != -1)
+        # rmv
+        #timerValido3 = (self.__timerFimDeServicoClienteFila2 != -1)
 
 
-        # Essa eh apenas uma condicional para a unica condicao inexperada:
+        # Essa eh apenas uma condicional para a unica condicao inesperada:
         # a de que nenhuma acao esteja agendada para acontecer;
         # Esse caso so pode ocorrer se houver uma falha do programa,
         # ja que ele deve ser interrompido logo antes disso ocorrer
+        
+        # rmv
+        '''
         if timerValido1 == False and timerValido2 == False and timerValido3 == False:
             return -1
+        '''
+        if timerValido1 == False and timerValido2 == False:
+            return -1
+
 
 
         # As proximas tres condicoes remetem aos casos em que apenas um dos tres
@@ -319,21 +352,38 @@ class Simulacao(object):
         # Se nenhuma chegada ira ocorrer e nao ha um cliente da fila 1 sendo
         # atendidos no momento, quer dizer que o proximo evento eh finalizar o 
         # servico de um cliente da fila 2. 
+        
+        # rmv
+        '''
         if timerValido1 == False and timerValido2 == False:
             return self.__timerFimDeServicoClienteFila2Indice
+        '''
 
         # Se nenhuma chegada ira ocorrer e nao ha um cliente da fila 2 sendo
         # atendido no momento, quer dizer que o proximo evento eh o fim 
         # do servico de um cliente da fila 1.
+
+        # rmv
+        '''
         if timerValido1 == False and timerValido3 == False:
+            return self.__timerFimDeServicoClienteFila1Indice
+        '''
+        if timerValido1 == False:
             return self.__timerFimDeServicoClienteFila1Indice
 
         # Se nao ha pessoas da fila 1 nem da fila 2 sendo atendidos,
         # entao o proximo evento eh a chegada de alguem no sistema.
+
+        # rmv
+        '''
         if timerValido2 == False and timerValido3 == False:
+            return self.__timerChegadaClienteFila1Indice
+        '''
+        if timerValido2 == False:
             return self.__timerChegadaClienteFila1Indice
 
 
+        '''
         # As proximas tres condicoes remetem aos casos em que apenas dois dos tres
         # eventos estao agendados para ocorrer, entao so eh necessario comparar
         # esses dois para ver qual ocorrera primeiro:
@@ -355,6 +405,7 @@ class Simulacao(object):
         # de qual dos dois ocorrera em um tempo menor.
         if timerValido3 == False:
             return self.__timerChegadaClienteFila1Indice if self.__timerChegadaClienteFila1 < self.__timerFimDeServicoClienteFila1 else self.__timerFimDeServicoClienteFila1Indice
+        '''
 
         
         # A proxima condicao remete ao caso em que os tres eventos estao agendados 
@@ -363,7 +414,7 @@ class Simulacao(object):
         # Eh criada uma lista com o tempo que falta ate que cada um dos tres eventos 
         # principais agendados ocorra, ordenados em eventos 0, 1 e 2, posicionados
         # nos respectivos indices da lista
-        lista = [self.__timerFimDeServicoClienteFila1, self.__timerFimDeServicoClienteFila2, self.__timerChegadaClienteFila1]
+        lista = [self.__timerFimDeServicoClienteFila1, self.__timerChegadaClienteFila1]
 
         # Com min(lista), retornamos o menor dos tres tempos presentes na lista;
         # com lista.index(), retornamos o indice desse tempo na lista, conseguindo assim 
@@ -384,9 +435,13 @@ class Simulacao(object):
             self.__tempoAtual += self.__timerChegadaClienteFila1
             if self.__timerFimDeServicoClienteFila1 != -1:
                 self.__timerFimDeServicoClienteFila1 -= self.__timerChegadaClienteFila1
+            # rmv
+            '''
             if self.__timerFimDeServicoClienteFila2 != -1:
                 self.__timerFimDeServicoClienteFila2 -= self.__timerChegadaClienteFila1
+            '''
             self.clienteEntraNaFila1()
+            
 
         if proximoTimer == self.__timerFimDeServicoClienteFila1Indice:
             self.agregarEmSomatorioPessoasPorTempo(self.__timerFimDeServicoClienteFila1)
@@ -394,10 +449,16 @@ class Simulacao(object):
             self.__tempoAtual += self.__timerFimDeServicoClienteFila1
             if self.__timerChegadaClienteFila1 != -1:
                 self.__timerChegadaClienteFila1 -= self.__timerFimDeServicoClienteFila1
+            # rmv
+            '''
             if self.__timerFimDeServicoClienteFila2 != -1:
                 self.__timerFimDeServicoClienteFila2 -= self.__timerFimDeServicoClienteFila1
+            '''
             self.clienteTerminaServicoNaFila1()
+            
 
+        # rmv
+        '''
         if proximoTimer == self.__timerFimDeServicoClienteFila2Indice:
             self.agregarEmSomatorioPessoasPorTempo(self.__timerFimDeServicoClienteFila2)
             
@@ -407,7 +468,7 @@ class Simulacao(object):
             if self.__timerFimDeServicoClienteFila1 != -1:
                 self.__timerFimDeServicoClienteFila1 -= self.__timerFimDeServicoClienteFila2
             self.clienteTerminaServicoNaFila2()
-        
+        '''
 
     """ Principal metodo da classe Simulacao. Aqui a simulacao eh iniciada. """
     def executarSimulacao(self, seed, lambdaValue, miValue, numeroDeClientesPorRodada, rodadas, hasOutputFile, variavelDeSaida, testeDeCorretude, intervaloDeConfianca):
@@ -474,15 +535,15 @@ def printHelp():
     print '   0:  Imprime as estatisticas de cada fase/rodada (nao parseavel pelo \'plot.py\')'
     print '   1:  Imprime o E[N] durante cada evento'
     print '   2:  Imprime o E[N1] durante cada evento'
-    print '   3:  Imprime o E[N2] durante cada evento'
+    print '   3:  Invalido'
     print '   4:  Imprime o E[Nq1] durante cada evento'
-    print '   5:  Imprime o E[Nq2] durante cada evento'
+    print '   5:  Invalido'
     print '   6:  Imprime o E[T1] durante cada evento'
-    print '   7:  Imprime o E[T2] durante cada evento'
+    print '   7:  Invalido'
     print '   8:  Imprime o E[W1] durante cada evento'
-    print '   9:  Imprime o E[W2] durante cada evento'
+    print '   9:  Invalido'
     print '  10:  Imprime o V(W1) durante cada evento'
-    print '  11:  Imprime o V(W2) durante cada evento'
+    print '  11:  Invalido'
 
 def safeInt(key, stringValue):
     # Converte uma string passada como valor de um parametro para um numero inteiro. 
@@ -511,8 +572,9 @@ def safeFloat(key, stringValue):
 def main(argv):
     lambdaValue = 0.3
     miValue = 1.0
-    numeroDeClientesPorRodada = 20000
-    rodadas = 100
+    # numero de clientes baixo somente para testes
+    numeroDeClientesPorRodada = 20
+    rodadas = 5
     simulacoes = 1
     outputFile = False
     testeDeCorretude = False
